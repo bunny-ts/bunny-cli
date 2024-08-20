@@ -1,7 +1,7 @@
 {
   "name": "@bunny-ts/cli",
-  "version": "0.0.9",
-  "type":"module",
+  "version": "0.0.10",
+  "type": "module",
   "description": "Bunny CLI tool",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
