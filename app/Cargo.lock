@@ -52,7 +52,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "bunny"
+name = "bunny-cli"
 version = "0.0.1"
 dependencies = [
  "clap",
