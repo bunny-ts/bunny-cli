@@ -8,6 +8,7 @@ if (!newVersion) {
 }
 
 try {
+  execSync("npm version " + newVersion);
   execSync("git add package.json");
   execSync(`git commit -m "Bump version to ${newVersion}"`);
 
