@@ -1,3 +1,7 @@
-/target/
+app/target/
 
 /Cargo.lock
+
+node_modules
+
+dist
