@@ -16,7 +16,7 @@
     "build:rust": "cargo build --release --manifest-path app/Cargo.toml",
     "build:ts": "bun build ./ts-wrapper/index.ts --outdir ./dist --target node",
     "build": "bun run build:rust && bun run build:ts",
-    "prepare:rust": "mkdir bin && cp app/target/release/bunny bin/",
+    "prepare:bin": "mkdir -p bin && cp app/target/release/bunny bin/",
     "prepublishOnly": "bun run build"
   },
   "author": "Your Name",

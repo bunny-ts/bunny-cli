@@ -28,9 +28,7 @@ jobs:
       run: bun run build:ts
 
     - name: Prepare binary
-      run: |
-        mkdir -p bin
-        cp app/target/release/bunny bin/
+      run: bun run prepare:bin 
         
     - name: Publish to npm
       run: |
