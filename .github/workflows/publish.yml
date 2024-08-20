@@ -30,7 +30,7 @@ jobs:
     - name: Prepare binary
       run: |
         mkdir -p bin
-        cp app/target/release/bunny-cli bin/
+        cp app/target/release/bunny bin/
         
     - name: Publish to npm
       run: |
