@@ -7,16 +7,49 @@ if (!newVersion) {
   process.exit(1);
 }
 
+function runCommand(command: string): string {
+  try {
+    return execSync(command, { encoding: "utf8", stdio: "pipe" }).trim();
+  } catch (error) {
+    console.error(`Error executing command: ${command}`);
+    console.error(error);
+    throw error;
+  }
+}
+
 try {
-  execSync("npm version " + newVersion);
-  console.log("Version has been bumped successfully.");
-  execSync("git add package.json");
-  execSync(`git commit -m "Bump version to ${newVersion}"`);
+  // Check if git is initialized and we're in a git repository
+  runCommand("git rev-parse --is-inside-work-tree");
 
-  execSync(`git tag v${newVersion}`);
+  // Check if there are any uncommitted changes
+  const status = runCommand("git status --porcelain");
+  if (status) {
+    console.error(
+      "There are uncommitted changes. Please commit or stash them before publishing.",
+    );
+    process.exit(1);
+  }
 
-  execSync("git push");
-  execSync("git push --tags");
+  // Update version in package.json
+  console.log(`Updating version to ${newVersion}`);
+  runCommand(`npm version ${newVersion} --no-git-tag-version`);
+
+  // Stage the changed package.json
+  console.log("Staging changes");
+  runCommand("git add package.json");
+
+  // Commit the version change
+  console.log("Committing changes");
+  runCommand(`git commit -m "Bump version to ${newVersion}"`);
+
+  // Create a new git tag
+  console.log("Creating git tag");
+  runCommand(`git tag v${newVersion}`);
+
+  // Push changes and tags to remote
+  console.log("Pushing to remote");
+  runCommand("git push");
+  runCommand("git push --tags");
 
   console.log(`Version ${newVersion} has been published successfully.`);
 } catch (error) {
