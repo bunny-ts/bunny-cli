@@ -18,7 +18,7 @@ function runCommand(command: string): string {
   }
 }
 export function log(message: string) {
-  log(`\x1b[32m✔️ ${message}\x1b[0m`);
+  console.log(`\x1b[32m✔️ ${message}\x1b[0m`);
 }
 try {
   runCommand("git rev-parse --is-inside-work-tree");
