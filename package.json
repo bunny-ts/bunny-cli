@@ -2,7 +2,7 @@
   "name": "@bunny-ts/cli",
   "module": "index.ts",
   "description": "A cli tool for Bunny projects",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "keywords": [
     "bunny",
     "cli"
