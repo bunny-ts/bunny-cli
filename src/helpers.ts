@@ -24,7 +24,8 @@ export async function runCommand(
   return new Promise((resolve, reject) => {
     spawn(args, {
       ...options,
-      stdout: "ignore",
+      stdout: null,
+      stderr: null,
       onExit: (_, code) => {
         if (code !== 0) {
           reject(
