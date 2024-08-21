@@ -1,3 +1,5 @@
+#!/usr/bin/env bun
+
 import { Command } from "commander";
 import { mkdir } from "fs/promises";
 import { join } from "path";
