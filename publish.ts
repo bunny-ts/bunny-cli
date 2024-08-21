@@ -4,6 +4,7 @@ const newVersion = process.argv[2];
 
 if (!newVersion) {
   console.error("Please provide a version number");
+
   process.exit(1);
 }
 
@@ -16,12 +17,12 @@ function runCommand(command: string): string {
     throw error;
   }
 }
-
+export function log(message: string) {
+  log(`\x1b[32m✔️ ${message}\x1b[0m`);
+}
 try {
-  // Check if git is initialized and we're in a git repository
   runCommand("git rev-parse --is-inside-work-tree");
 
-  // Check if there are any uncommitted changes
   const status = runCommand("git status --porcelain");
   if (status) {
     console.error(
@@ -30,28 +31,23 @@ try {
     process.exit(1);
   }
 
-  // Update version in package.json
-  console.log(`Updating version to ${newVersion}`);
+  log(`Updating version to ${newVersion}`);
   runCommand(`npm version ${newVersion} --no-git-tag-version`);
 
-  // Stage the changed package.json
-  console.log("Staging changes");
+  log("Staging changes");
   runCommand("git add package.json");
 
-  // Commit the version change
-  console.log("Committing changes");
+  log("Committing changes");
   runCommand(`git commit -m "Bump version to ${newVersion}"`);
 
-  // Create a new git tag
-  console.log("Creating git tag");
+  log("Creating git tag");
   runCommand(`git tag v${newVersion}`);
 
-  // Push changes and tags to remote
-  console.log("Pushing to remote");
+  log("Pushing to remote");
   runCommand("git push");
   runCommand("git push --tags");
 
-  console.log(`Version ${newVersion} has been published successfully.`);
+  log(`Version ${newVersion} has been published successfully.`);
 } catch (error) {
   console.error("An error occurred during publishing:", error);
   process.exit(1);

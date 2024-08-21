@@ -2,37 +2,27 @@ name: Publish
 
 on:
   release:
-    types: [created]
+  types: [created]
 
-jobs:
+jobs: 
   build-and-publish:
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+    steps: 
+      - uses: actions/checkout@v1
 
-    - name: Setup Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        profile: minimal
-        toolchain: stable
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@v1
-      with:
-        bun-version: latest
+      - name: Build
+        run: bun run build
 
-    - name: Build Rust CLI
-      run: bun run build:rust 
-
-    - name: Build TypeScript Wrapper
-      run: bun run build:ts
-
-    - name: Prepare binary
-      run: bun run prepare:bin 
+      - name: Publish to npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         
-    - name: Publish to npm
-      run: |
-        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-        npm publish --access public
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+

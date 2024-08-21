@@ -1,31 +1,41 @@
 {
   "name": "@bunny-ts/cli",
-  "version": "0.1.1",
-  "type": "module",
-  "description": "Bunny CLI tool",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "module": "index.ts",
+  "description": "A cli tool for Bunny projects",
+  "version": "0.1.0",
+  "keywords": [
+    "bunny",
+    "cli"
+  ],
+  "files": [
+    "dist"
+  ],
   "bin": {
     "bunny": "dist/index.js"
   },
-  "files": [
-    "dist",
-    "bin"
-  ],
-  "scripts": {
-    "build:rust": "cargo build --release --manifest-path app/Cargo.toml",
-    "build:ts": "bun build ./ts-wrapper/index.ts --outdir ./dist --target node",
-    "build": "bun run build:rust && bun run build:ts",
-    "prepare:bin": "mkdir -p bin && cp app/target/release/bunny bin/",
-    "prepublishOnly": "bun run build"
+  "author": "Lev Lavryniuk <leoyt109@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
-  "author": "Your Name",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bunny-ts/bunny-cli.git"
+  },
+  "type": "module",
   "devDependencies": {
-    "@types/node": "^16.0.0",
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "bun build ./src/* --outdir ./dist --target bun",
+  },
+  "dependencies": {
+    "@types/commander": "^2.12.2",
+    "commander": "^12.1.0",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0"
   }
 }
