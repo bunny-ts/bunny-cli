@@ -8,7 +8,8 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps: 
-      - uses: actions/checkout@v1
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -24,5 +25,4 @@ jobs:
           npm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        
 
